@@ -29,7 +29,6 @@ def main():
     k = h ** 2 / (2 * D)  # skok t
     index1 = student_index(index)[0]
     index2 = student_index(index)[1]
-    #data = [[student_index(index)[0], 1, 1, 1, 1, 1, 1, 1, 1, 1, student_index(index)[1]]]
     data = [[index1 for i in range(10)] + [index2]]
     j = 0
     error = 1
@@ -68,8 +67,8 @@ def main():
     plt.plot(list(j * k for j in range(j+1)), blad_wzgl)
     plt.show()
 
-    np.savetxt('dane_numeryczne', data, fmt='%10.5f')
-    np.savetxt('dane_analityczne', teor, fmt='%10.5f')
+    np.savetxt('dane_numeryczne', data, fmt='%10.5f', delimiter='\t')
+    np.savetxt('dane_analityczne', teor, fmt='%10.5f', delimiter='\t')
 
 
 if __name__ == '__main__':
