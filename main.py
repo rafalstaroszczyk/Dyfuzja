@@ -7,7 +7,7 @@ def student_index(index):
 
 
 def teoretyczne(t, T1, T2, D):
-    nmax=1000
+    nmax=10000
     u = np.zeros(11)
     x = np.linspace(0, 1, 11)
     for n in range(1, nmax + 1):
@@ -48,18 +48,28 @@ def main():
 
 
     ax = plt.axes(projection='3d')
-    X, Y = np.meshgrid(list(x for x in range(11)), list(range(j+1)))
-    X = X * h
-    Y = Y * k
-    np.savetxt('dane', data, fmt = '%10.5f')
+    X, Y = np.meshgrid(list(x * h for x in range(11)), list(t * k for t in range(j+1)))
     ax.scatter(X, Y, data)
     teor = np.zeros((11, j+1))
-    print(np.shape(teor[:, 1]))
     for i in range(j+1):
         teor[:, i] = teoretyczne(i * k, index1, index2, D)
     teor = np.transpose(teor)
     ax.scatter(X, Y, teor)
     plt.show()
+
+    blad_wzgl = []
+    for j in range(97):
+        blad_wzgl_suma = 0
+        for i in range(11):
+            blad_wzgl_suma += abs((teor[j, i] - data[j][i])/teor[j][i])
+        blad_wzgl_suma /= 11
+        blad_wzgl.append(np.log10(blad_wzgl_suma))
+
+    plt.plot(list(j * k for j in range(j+1)), blad_wzgl)
+    plt.show()
+
+    np.savetxt('dane_numeryczne', data, fmt='%10.5f')
+    np.savetxt('dane_analityczne', teor, fmt='%10.5f')
 
 
 if __name__ == '__main__':
