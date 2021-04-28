@@ -32,6 +32,7 @@ def main():
     data = [[index1 for i in range(10)] + [index2]]
     j = 0
     error = 1
+    error_num = []
     while(error > tolerance):
         temp = [index1]
         for i in range(1, 10):
@@ -44,6 +45,7 @@ def main():
         for i in range(11):
             error += abs((data[j][i]-data[j-1][i]) / data[j][i])
         error /= 11
+        error_num.append(np.log10(error))
 
 
     ax = plt.axes(projection='3d')
@@ -64,6 +66,8 @@ def main():
         blad_wzgl_suma /= 11
         blad_wzgl.append(np.log10(blad_wzgl_suma))
 
+    plt.plot(list(j * k for j in range(j)), error_num)
+    plt.show()
     plt.plot(list(j * k for j in range(j+1)), blad_wzgl)
     plt.show()
 
